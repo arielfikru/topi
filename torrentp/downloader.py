@@ -1,7 +1,6 @@
 import sys
 import time
 
-
 class Downloader:
     def __init__(self, session, torrent_info, save_path, libtorrent, is_magnet):
         self._session = session
@@ -26,30 +25,27 @@ class Downloader:
             self._status = self._file.status()
         return self._status
 
+    def download(self):
+        print(f'Start downloading {self.name}')
+        while not self._status.is_seeding:
+            s = self.status()
+            print('\r%.2f%% complete (down: %.1f kB/s up: %.1f kB/s peers: %d) %s' % (
+                s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000,
+                s.num_peers, s.state), end=' ')
+            sys.stdout.flush()
+            time.sleep(1)
+        print(self._status.name, 'downloaded successfully.')
+
     @property
     def name(self):
         self._name = self.status().name
         return self._name
 
-    def download(self):
-        print(f'Start downloading {self.name}')
-        while not self._status.is_seeding:
-            s = self.status()
-
-            print('\r%.2f%% complete (down: %.1f kB/s up: %.1f kB/s peers: %d) %s' % (
-                s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000,
-                s.num_peers, s.state), end=' ')
-
-            sys.stdout.flush()
-            time.sleep(1)
-
-        print(self._status.name, 'downloaded successfully.')
-
     def __str__(self):
-        pass
+        return f"Downloader(name={self._name}, state={self._state})"
 
     def __repr__(self):
-        pass
+        return f"Downloader(name={self._name}, state={self._state})"
 
     def __call__(self):
         pass
