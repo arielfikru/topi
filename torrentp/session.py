@@ -27,10 +27,10 @@ class Session:
         return self._session.download_rate_limit()
 
     def __str__(self):
-        pass
+        return "Session for torrent client."
 
     def __repr__(self):
-        pass
+        return "Session for torrent client."
 
     def __call__(self):
         return self.create_session()
