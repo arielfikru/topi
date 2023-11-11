@@ -3,7 +3,6 @@ from .torrent_info import TorrentInfo
 from .downloader import Downloader
 import libtorrent as lt
 
-
 class TorrentDownloader:
     def __init__(self, file_path, save_path):
         self._file_path = file_path
@@ -33,11 +32,16 @@ class TorrentDownloader:
         self._file = self._downloader
         self._file.download()
 
+    def list_torrent_files(self):
+        """ List files in the torrent """
+        torrent_info = TorrentInfo(self._file_path, self._lt)
+        return torrent_info.list_files()
+
     def __str__(self):
-        pass
+        return f"TorrentDownloader(file_path={self._file_path}, save_path={self._save_path})"
 
     def __repr__(self):
-        pass
+        return f"TorrentDownloader(file_path={self._file_path}, save_path={self._save_path})"
 
     def __call__(self):
         pass
