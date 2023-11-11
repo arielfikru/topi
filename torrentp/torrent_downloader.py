@@ -21,8 +21,8 @@ class TorrentDownloader:
             self._downloader = Downloader(session=self._session, torrent_info=self._torrent_info,
                                           save_path=self._save_path, libtorrent=lt, is_magnet=False)
 
-        self._session.set_download_limit(download_speed)
-        self._session.set_upload_limit(upload_speed)
+        #self._session.set_download_limit(download_speed)
+        #self._session.set_upload_limit(upload_speed)
         self._file = self._downloader
         self._file.download()
 
