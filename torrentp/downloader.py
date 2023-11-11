@@ -36,6 +36,15 @@ class Downloader:
             time.sleep(1)
         print(self._status.name, 'downloaded successfully.')
 
+    def download_specific_file(self, file_id):
+        """Download a specific file by its ID."""
+        file_priorities = [0] * len(self._torrent_info.files())
+        if 0 <= file_id < len(file_priorities):
+            file_priorities[file_id] = 1  # Download only the file with the given ID
+
+        self._file.prioritize_files(file_priorities)
+        self.download()
+
     @property
     def name(self):
         self._name = self.status().name
