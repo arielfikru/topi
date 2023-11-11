@@ -31,6 +31,12 @@ class TorrentDownloader:
         torrent_info = TorrentInfo(self._file_path, self._lt, self._session)
         return torrent_info.list_files()
 
+    def download_specific_file(self, file_id):
+        """Download a specific file by its ID."""
+        if not hasattr(self, '_downloader'):
+            self.start_download()
+        self._downloader.download_specific_file(file_id)
+
     def __str__(self):
         return f"TorrentDownloader(file_path={self._file_path}, save_path={self._save_path})"
 
