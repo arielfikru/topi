@@ -21,13 +21,13 @@ class TorrentDownloader:
             self._downloader = Downloader(session=self._session, torrent_info=self._torrent_info,
                                           save_path=self._save_path, libtorrent=lt, is_magnet=False)
 
+        # Correctly set the download and upload limits
         self._session.set_download_limit(download_speed)
         self._session.set_upload_limit(upload_speed)
-        self._file = self._downloader
-        self._file.download()
+        self._downloader.download()
 
     def list_torrent_files(self):
-        """ List files in the torrent """
+        """List files in the torrent."""
         torrent_info = TorrentInfo(self._file_path, self._lt, self._session)
         return torrent_info.list_files()
 
