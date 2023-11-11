@@ -1,12 +1,20 @@
 import libtorrent as lt
 
 class TorrentInfo:
-    def __init__(self, path_or_magnet, libtorrent):
+    def __init__(self, path_or_magnet, libtorrent, session):
         self._lt = libtorrent
+        self._session = session
+        self._info = None
         if path_or_magnet.startswith("magnet:"):
-            self._info = self._lt.parse_magnet_uri(path_or_magnet)
+            self._info = self._download_metadata(path_or_magnet)
         else:
             self._info = self._lt.torrent_info(path_or_magnet)
+
+    def _download_metadata(self, magnet_uri):
+        magnet_handle = self._lt.add_magnet_uri(self._session, magnet_uri, {'save_path': '.'})
+        while not magnet_handle.has_metadata():
+            time.sleep(1)
+        return magnet_handle.get_torrent_info()
 
     def list_files(self):
         """ List files in the torrent """
