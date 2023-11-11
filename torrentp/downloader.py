@@ -38,12 +38,20 @@ class Downloader:
 
     def download_specific_file(self, file_id):
         """Download a specific file by its ID."""
-        file_priorities = [0] * len(self._torrent_info.files())
+        if self._is_magnet:
+            self._wait_for_metadata()
+
+        file_priorities = [0] * len(self._file.get_torrent_info().files())
         if 0 <= file_id < len(file_priorities):
             file_priorities[file_id] = 1  # Download only the file with the given ID
 
         self._file.prioritize_files(file_priorities)
         self.download()
+
+    def _wait_for_metadata(self):
+        """Wait for metadata to be available."""
+        while not self._file.has_metadata():
+            time.sleep(1)
 
     @property
     def name(self):
