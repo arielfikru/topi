@@ -8,7 +8,7 @@ class TorrentDownloader:
         self._file_path = file_path
         self._save_path = save_path
         self._lt = lt
-        self._session = Session(self._lt).create_session()  # Inisialisasi sesi libtorrent
+        self._session = Session(self._lt).create_session()
 
     def start_download(self, download_speed=0, upload_speed=0):
         if self._file_path.startswith('magnet:'):
