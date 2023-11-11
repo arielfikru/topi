@@ -1,10 +1,12 @@
 import libtorrent as lt
 
 class TorrentInfo:
-    def __init__(self, path, libtorrent):
-        self._path = path
+    def __init__(self, path_or_magnet, libtorrent):
         self._lt = libtorrent
-        self._info = self._lt.torrent_info(self._path)
+        if path_or_magnet.startswith("magnet:"):
+            self._info = self._lt.parse_magnet_uri(path_or_magnet)
+        else:
+            self._info = self._lt.torrent_info(path_or_magnet)
 
     def list_files(self):
         """ List files in the torrent """
