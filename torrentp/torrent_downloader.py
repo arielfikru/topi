@@ -6,7 +6,6 @@ import libtorrent as lt
 class TorrentDownloader:
     def __init__(self, path_or_magnet, save_path):
         self._file_path = path_or_magnet
-        self._file_path = file_path
         self._save_path = save_path
         self._downloader = None
         self._torrent_info = None
