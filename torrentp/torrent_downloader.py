@@ -22,8 +22,8 @@ class TorrentDownloader:
                                           save_path=self._save_path, libtorrent=lt, is_magnet=False)
 
         # Correctly set the download and upload limits
-        self._session.set_download_limit(download_speed)
-        self._session.set_upload_limit(upload_speed)
+        #self._session.set_download_limit(download_speed)
+        #self._session.set_upload_limit(upload_speed)
         self._downloader.download()
 
     def list_torrent_files(self):
